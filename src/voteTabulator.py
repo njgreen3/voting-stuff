@@ -134,7 +134,7 @@ def tabulate_rcv(ballots, candidateNames={}):
         highest_candidate, highest_votes = max(tallies.items(), key=lambda x: x[1])
         if highest_votes > (active_ballots_count / 2):
             print(f"\nWINNER DECLARED: Candidate {candidateNames[highest_candidate]} wins with {highest_votes} votes!")
-            break
+            #break
             
         # If only two candidates remain, the tabulation ends 
         if len(active_candidates) <= 2:
@@ -159,7 +159,7 @@ if __name__ == "__main__":
     candidate_file = os.path.join(data_path,"CandidateManifest.json")
     
     # You will need to look at the JSON file to find the specific "Id" for the contest you want to tabulate.
-    contest_id_to_tabulate = 6 
+    contest_id_to_tabulate = 5 
     print("Parsing Candidates...")
     try:
         candidates = parse_candidate_json(candidate_file, contest_id_to_tabulate)
