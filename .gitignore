@@ -1,0 +1,33 @@
+# ==============================================================================
+# BYTECODE & COMPILED FILES
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ==============================================================================
+# VIRTUAL ENVIRONMENTS
+# ==============================================================================
+# Ignore local environments. Never commit dependencies or binaries.
+.venv/
+venv/
+ENV/
+env/
+# Environment managers
+.python-version
+.pdm.toml
+.pypackages/
+.spyproject/
+
+# ==============================================================================
+# ENVIRONMENT VARIABLES & SECRETS (CRITICAL)
+# ==============================================================================
+# Never commit your private credentials, API keys, or production secrets.
+.env
+*.env
+.env.*
+*.local
+local_settings.py
+data\CvrExport.json
+data/CvrExport.json
