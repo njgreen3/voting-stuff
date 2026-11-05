@@ -1,5 +1,6 @@
 import json
 import os
+import glob
 
 def clean_ballot(marks):
     """
@@ -42,14 +43,13 @@ def clean_ballot(marks):
     return valid_ballot
 
 
-def parse_cvr_json(file_path, target_contest_id):
+def parse_cvr_json(file_path, target_contest_id, ballots=[]):
     """
     Parses a Dominion CVR_Export.json file to extract cleaned RCV ballots.
     """
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    ballots = []
     
     # Navigate the Dominion JSON schema structure
     sessions = data.get('Sessions', [])
@@ -154,11 +154,12 @@ def tabulate_rcv(ballots, candidateNames={}):
 
 if __name__ == "__main__":
     # Example usage:
-    cvr_file = os.path.join("..","data","CvrExport.json")
-    candidate_file = os.path.join("..","data","CandidateManifest.json")
+    data_path = os.path.join("..","data")
+    cvr_files = glob.glob(os.path.join(data_path,"CvrExport*.json"))
+    candidate_file = os.path.join(data_path,"CandidateManifest.json")
     
     # You will need to look at the JSON file to find the specific "Id" for the contest you want to tabulate.
-    contest_id_to_tabulate = 5 
+    contest_id_to_tabulate = 6 
     print("Parsing Candidates...")
     try:
         candidates = parse_candidate_json(candidate_file, contest_id_to_tabulate)
@@ -167,8 +168,10 @@ if __name__ == "__main__":
         print(f"Error: Could not find {candidate_file}. Continuing with only candidate IDs.")
     print("Loading and cleaning ballots...")
     try:
-        election_ballots = parse_cvr_json(cvr_file, contest_id_to_tabulate)
+        election_ballots = []
+        for file in cvr_files:
+            election_ballots = parse_cvr_json(file, contest_id_to_tabulate, election_ballots)
         print(f"Loaded {len(election_ballots)} valid ballots.\n")
-        tabulate_rcv(election_ballots, candidates)
     except FileNotFoundError:
-        print(f"Error: Could not find {cvr_file}. Please ensure the CVR JSON is in the same directory.")
+        print(f"Error: Could not find {file}. Please ensure the CVR JSON is in the same directory.")
+    tabulate_rcv(election_ballots, candidates)

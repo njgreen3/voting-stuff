@@ -29,5 +29,4 @@ env/
 .env.*
 *.local
 local_settings.py
-data\CvrExport.json
-data/CvrExport.json
+data/CvrExport*.json
