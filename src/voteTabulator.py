@@ -159,7 +159,7 @@ if __name__ == "__main__":
     candidate_file = os.path.join(data_path,"CandidateManifest.json")
     
     # You will need to look at the JSON file to find the specific "Id" for the contest you want to tabulate.
-    contest_id_to_tabulate = 5 
+    contest_id_to_tabulate = 52
     print("Parsing Candidates...")
     try:
         candidates = parse_candidate_json(candidate_file, contest_id_to_tabulate)
